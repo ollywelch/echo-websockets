@@ -17,6 +17,6 @@ func NewServer() *Server {
 		upgrader: websocket.Upgrader{
 			CheckOrigin: func(r *http.Request) bool { return true },
 		},
-		wsStore: &websockets.InMemoryStore{},
+		wsStore: websockets.NewInMemoryStore(),
 	}
 }
