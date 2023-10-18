@@ -5,6 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/ollywelch/echo-websockets/pkg/websockets"
+	"github.com/ollywelch/echo-websockets/types"
 )
 
 func (s *Server) HandleWebSockets(c echo.Context) error {
@@ -22,13 +23,13 @@ func (s *Server) HandleWebSockets(c echo.Context) error {
 
 	for {
 		// Read
-		var msg websockets.Message
+		var msg types.WebsocketMessage
 		if err := conn.ReadJSON(&msg); err != nil {
 			c.Logger().Errorf("error reading message: %+v", err)
 			break
 		}
 		payload := fmt.Sprintf("%s sent %s", conn.Id, string(msg.Payload))
-		s.wsStore.Broadcast(&websockets.Message{Payload: payload})
+		s.wsStore.Broadcast(&types.WebsocketMessage{Payload: payload})
 	}
 	return nil
 }
