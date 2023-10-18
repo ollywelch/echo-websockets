@@ -9,9 +9,10 @@ import (
 )
 
 type Server struct {
-	upgrader websocket.Upgrader
-	wsStore  websockets.Store
-	db       db.Store
+	upgrader  websocket.Upgrader
+	wsStore   websockets.Store
+	db        db.Store
+	JWTSecret []byte
 }
 
 func NewServer() *Server {
@@ -19,7 +20,8 @@ func NewServer() *Server {
 		upgrader: websocket.Upgrader{
 			CheckOrigin: func(r *http.Request) bool { return true },
 		},
-		wsStore: websockets.NewInMemoryStore(),
-		db:      &db.InMemoryStore{},
+		wsStore:   websockets.NewInMemoryStore(),
+		db:        &db.InMemoryStore{},
+		JWTSecret: []byte("supersecret"),
 	}
 }

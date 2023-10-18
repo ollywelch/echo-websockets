@@ -12,6 +12,9 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	e.POST("/login", s.PostLogin)
+
 	e.GET("/ws", s.GetWebSockets)
 	e.GET("/users", s.GetUsers)
 	e.POST("/users", s.PostUsers)
