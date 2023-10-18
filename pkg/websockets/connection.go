@@ -3,11 +3,13 @@ package websockets
 import (
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
+	"github.com/ollywelch/echo-websockets/types"
 )
 
 type ActiveConn struct {
-	Id uuid.UUID
-	ws *websocket.Conn
+	Id   uuid.UUID
+	User types.UserRead
+	ws   *websocket.Conn
 }
 
 func NewActiveConn(ws *websocket.Conn) ActiveConn {
@@ -27,4 +29,8 @@ func (c *ActiveConn) SendJSON(v interface{}) error {
 
 func (c *ActiveConn) Close() error {
 	return c.ws.Close()
+}
+
+func (c *ActiveConn) SetUser(u types.UserRead) {
+	c.User = u
 }

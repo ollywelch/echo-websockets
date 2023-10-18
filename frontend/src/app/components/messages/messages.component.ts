@@ -5,6 +5,7 @@ import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 interface Message {
   payload: string;
 }
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJPbGx5IiwiZXhwIjoxNjk3NjU1Nzc5fQ.EgZxBFVTYS84RAqDNYuYXodKeyAYVQ71B4u59WOPpIc'
 
 @Component({
   selector: 'app-messages',
@@ -21,6 +22,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.socket$.subscribe((msg) => {console.log(msg); this.messages.push(msg)})
+    this.socket$.next({payload: token})
     this.sendMessages();
   }
 

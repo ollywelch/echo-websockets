@@ -24,9 +24,6 @@ func (s *InMemoryStore) Remove(c ActiveConn) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	// call close on the ActiveConn
-	c.Close()
-
 	// remove the Active Conn from the list
 	index := 0
 	for _, conn := range s.conns {
