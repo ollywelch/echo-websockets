@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, map } from 'rxjs';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
+import { UserService } from 'src/app/services/user.service';
+import { WebsocketService } from 'src/app/services/websocket.service';
 
 interface Message {
   payload: string;
@@ -12,28 +14,28 @@ const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJPbGx5IiwiZXhwIjox
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit, OnDestroy {
+export class MessagesComponent implements OnInit {
 
-  messages: Array<Message> = [];
-  socket$: WebSocketSubject<Message> = webSocket('ws://localhost:3000/ws');
+  input: string = ''
+  messages: Array<string> = [];
+  username?: string
 
-  constructor() {
+  constructor(private wsService: WebsocketService, private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.socket$.subscribe((msg) => {console.log(msg); this.messages.push(msg)})
-    this.socket$.next({payload: token})
-    this.sendMessages();
+    this.wsService.getMessages().subscribe((msg) => {this.messages.push(msg)})
+    this.userService.getCurrentUser().subscribe((user) => this.username = user.username)
   }
 
-  sendMessages() {
-    interval(1000).pipe(
-      map((i) => this.socket$.next({payload: `message ${i}`}))
-    ).subscribe()
+  sendMessage(msg: string) {
+    this.wsService.sendMessage(msg);
   }
 
-  ngOnDestroy(): void {
-    this.socket$.complete()
-  }
+  // sendMessages() {
+  //   interval(1000).pipe(
+  //     map((i) => this.wsService.sendMessage(`message ${i}`))
+  //   ).subscribe()
+  // }
 
 }
