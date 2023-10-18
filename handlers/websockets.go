@@ -8,7 +8,7 @@ import (
 	"github.com/ollywelch/echo-websockets/types"
 )
 
-func (s *Server) HandleWebSockets(c echo.Context) error {
+func (s *Server) GetWebSockets(c echo.Context) error {
 	ws, err := s.upgrader.Upgrade(c.Response(), c.Request(), nil)
 
 	if err != nil {
