@@ -16,3 +16,11 @@ body {
 .justify-content-center {
   justify-content: center;
 }
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
+
+.m-2 {
+  margin: 1rem;
+}
