@@ -1,3 +1,3 @@
 export interface Message {
-    payload: string;
+  payload: string;
 }

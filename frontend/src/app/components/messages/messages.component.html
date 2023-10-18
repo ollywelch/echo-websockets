@@ -1,9 +1,7 @@
-<h1 *ngIf="username">Welcome {{username}}</h1>
+<h1 *ngIf="username">Welcome {{ username }}</h1>
 <mat-form-field>
   <mat-label>Send a message</mat-label>
   <textarea matInput [(ngModel)]="input"></textarea>
 </mat-form-field>
 <button mat-button color="primary" (click)="sendMessage(input)">Send</button>
-<p *ngFor="let message of messages">
-  {{message}}
-</p>
+<p *ngFor="let message of messages">{{ message }}</p>

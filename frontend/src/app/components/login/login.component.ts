@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
@@ -12,28 +12,31 @@ export class LoginComponent {
   form = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
-  })
+  });
   hide = true;
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(
+    private loginService: LoginService,
+    private router: Router
+  ) {}
 
   signUp() {
-    this.router.navigate(['sign-up'])
+    this.router.navigate(['sign-up']);
   }
 
   submit() {
     if (!this.form.valid) {
-      return
+      return;
     }
-    var username = this.form.get("username")?.value
-    var password = this.form.get("password")?.value
+    const username = this.form.get('username')?.value;
+    const password = this.form.get('password')?.value;
     if (!username || !password) {
-      return
+      return;
     }
     this.loginService.login(username, password).subscribe((token) => {
       if (token) {
-        this.router.navigateByUrl('/messages')
+        this.router.navigateByUrl('/messages');
       }
-    })
+    });
   }
 }

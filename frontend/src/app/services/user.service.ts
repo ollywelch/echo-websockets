@@ -7,14 +7,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   createUser(user: UserCreate): Observable<User> {
-    return this.apiService.post<User>('/users', user)
+    return this.apiService.post<User>('/users', user);
   }
 
   getCurrentUser(): Observable<User> {
-    return this.apiService.get<User>('/users/me')
+    return this.apiService.get<User>('/users/me');
   }
 }
