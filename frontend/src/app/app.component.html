@@ -1,10 +1,20 @@
 <div class="app-background">
-  <app-nav-bar></app-nav-bar>
-  <div class="content">
-    <mat-card>
-      <mat-card-content>
-        <router-outlet></router-outlet>
-      </mat-card-content>
-    </mat-card>
-  </div>
+  <app-nav-bar (sidebarToggle)="showSidebar = !showSidebar"></app-nav-bar>
+  <mat-sidenav-container class="snav-container">
+    <mat-sidenav mode="side" [opened]="showSidebar">
+      <mat-nav-list>
+        <a *ngFor="let link of getLinks()" mat-list-item (click)="link.action()">{{link.title}}</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content">
+        <mat-card>
+          <mat-card-content>
+            <router-outlet></router-outlet>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
 </div>
