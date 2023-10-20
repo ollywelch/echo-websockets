@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
-import { ApiService } from './api.service';
 import { Message } from '../types/websocket';
 import { Observable, map } from 'rxjs';
-import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   constructor(
-    private apiService: ApiService,
-    private router: Router
+    private authService: AuthService
   ) {}
 
-  messages: Array<Message> = [];
-  private hasAuthd = false;
   private socket$: WebSocketSubject<Message> = webSocket('ws://localhost:3000/ws');
+
+  authenticate() {
+    const token = this.authService.token;
+    if (!token) {
+      console.warn("Could not send authentication message as no token set")
+      return
+    }
+    this.socket$.next({payload: token});
+  }
 
   getMessages(): Observable<string> {
     return this.socket$.pipe(map((msg) => msg.payload));
   }
 
   sendMessage(msg: string) {
-    if (!this.hasAuthd) {
-      const token = this.apiService.token;
-      if (token) {
-        this.socket$.next({ payload: token });
-        this.hasAuthd = true;
-      } else {
-        this.router.navigate(['login']);
-      }
-    }
     return this.socket$.next({ payload: msg });
+  }
+
+  close() {
+    this.socket$.complete();
   }
 }

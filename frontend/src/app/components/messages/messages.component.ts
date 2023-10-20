@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
 
@@ -7,7 +7,7 @@ import { WebsocketService } from 'src/app/services/websocket.service';
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, OnDestroy {
   input = '';
   messages: Array<string> = [];
   username?: string;
@@ -21,6 +21,7 @@ export class MessagesComponent implements OnInit {
     this.wsService.getMessages().subscribe((msg) => {
       this.messages.push(msg);
     });
+    this.wsService.authenticate();
     this.userService
       .getCurrentUser()
       .subscribe((user) => (this.username = user.username));
@@ -30,9 +31,8 @@ export class MessagesComponent implements OnInit {
     this.wsService.sendMessage(msg);
   }
 
-  // sendMessages() {
-  //   interval(1000).pipe(
-  //     map((i) => this.wsService.sendMessage(`message ${i}`))
-  //   ).subscribe()
-  // }
+  ngOnDestroy(): void {
+    this.wsService.close();
+  }
+
 }

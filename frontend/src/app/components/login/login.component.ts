@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent {
   hide = true;
 
   constructor(
-    private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -33,8 +33,9 @@ export class LoginComponent {
     if (!username || !password) {
       return;
     }
-    this.loginService.login(username, password).subscribe((token) => {
+    this.authService.login(username, password).subscribe((token) => {
       if (token) {
+        console.log(token);
         this.router.navigateByUrl('/messages');
       }
     });
