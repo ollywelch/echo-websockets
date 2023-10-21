@@ -11,12 +11,14 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-
   get token() {
-    return localStorage.getItem(environment.tokenKey)
+    return localStorage.getItem(environment.tokenKey);
   }
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
   login(username: string, password: string): Observable<string> {
     const body = `username=${username}&password=${password}`;
@@ -37,6 +39,6 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<User> {
-    return this.apiService.get<User>(`/users/me`)
+    return this.apiService.get<User>(`/users/me`);
   }
 }

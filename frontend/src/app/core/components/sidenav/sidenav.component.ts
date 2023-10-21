@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { AuthService } from './core/services/auth.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.css']
 })
-export class AppComponent {
-  title = 'frontend';
-  showSidebar = false;
+export class SidenavComponent {
+  @Input() showSidebar = false;
+  @Output() showSidebarChange = new EventEmitter<boolean>();
 
   constructor(
     private authService: AuthService,
@@ -18,7 +18,7 @@ export class AppComponent {
 
   goTo(path: string) {
     this.router.navigate([path]);
-    this.showSidebar = false;
+    this.showSidebarChange.emit(false);
   }
 
   getLinks(): Array<{ action: () => void; title: string }> {

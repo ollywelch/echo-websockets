@@ -8,19 +8,17 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class WebsocketService {
-  constructor(
-    private authService: AuthService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   private socket$: WebSocketSubject<Message> = webSocket('ws://localhost:3000/ws');
 
   authenticate() {
     const token = this.authService.token;
     if (!token) {
-      console.warn("Could not send authentication message as no token set")
-      return
+      console.warn('Could not send authentication message as no token set');
+      return;
     }
-    this.socket$.next({payload: token});
+    this.socket$.next({ payload: token });
   }
 
   getMessages(): Observable<string> {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -35,8 +35,7 @@ export class LoginComponent {
     }
     this.authService.login(username, password).subscribe((token) => {
       if (token) {
-        console.log(token);
-        this.router.navigateByUrl('/messages');
+        this.router.navigate(['chats']);
       }
     });
   }

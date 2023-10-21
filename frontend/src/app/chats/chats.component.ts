@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
-import { WebsocketService } from 'src/app/services/websocket.service';
+import { WebsocketService } from '../core/services/websocket.service';
+import { UserService } from '../core/services/user.service';
 
 @Component({
-  selector: 'app-messages',
-  templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.css']
+  selector: 'app-chats',
+  templateUrl: './chats.component.html',
+  styleUrls: ['./chats.component.css']
 })
-export class MessagesComponent implements OnInit, OnDestroy {
+export class ChatsComponent implements OnInit, OnDestroy {
   input = '';
   messages: Array<string> = [];
   username?: string;
@@ -34,5 +34,4 @@ export class MessagesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.wsService.close();
   }
-
 }

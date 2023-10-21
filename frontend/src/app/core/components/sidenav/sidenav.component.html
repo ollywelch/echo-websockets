@@ -1,0 +1,17 @@
+<mat-sidenav-container class="snav-container">
+  <mat-sidenav mode="side" [opened]="showSidebar">
+    <mat-nav-list>
+      <a *ngFor="let link of getLinks()" mat-list-item (click)="link.action()"
+        >{{link.title}}</a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content">
+      <mat-card>
+        <mat-card-content>
+          <ng-content></ng-content>
+        </mat-card-content>
+      </mat-card>
+    </div> </mat-sidenav-content
+></mat-sidenav-container>
